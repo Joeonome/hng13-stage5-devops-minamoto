@@ -1,0 +1,15 @@
+[Unit]
+Description=Minamotot {{ comp.name }} service
+After=network.target
+
+[Service]
+Type=simple
+User={{ deploy_user }}
+WorkingDirectory={{ comp.app_root }}
+Environment=NODE_ENV={{ detect_env }}
+ExecStart={{ comp.exec_start | default('/usr/bin/node index.js') }}
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

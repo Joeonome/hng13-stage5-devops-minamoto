@@ -1,0 +1,40 @@
+{
+    "agent": {
+        "metrics_collection_interval": 60,
+        "run_as_user": "root"
+    },
+    "logs": {
+        "logs_collected": {
+            "files": {
+                "collect_list": [
+                {% for c in components %}
+                {
+                    "file_path": "/var/log/nginx/{{ project_name }}_{{ c.name }}.access.log",
+                    "log_group_name": "/ec2/{{ detected_env }}/{{ project_name }}/nginx",
+                    "log_stream_name": "{instance_id}/{{ c.name }}/access",
+                    "timezone": "UTC"
+                },
+                {
+                    "file_path": "/var/log/nginx/{{ project_name }}_{{ c.name }}.error.log",
+                    "log_group_name": "/ec2/{{ detected_env }}/{{ project_name }}/nginx",
+                    "log_stream_name": "{instance_id}/{{ c.name }}/error",
+                    "timezone": "UTC"
+                }
+                {
+                    "file_path": "{{ c.app_root }}/logs/{{ c.name }}.stdout.log",
+                    "log_group_name": "/ec2/{{ detected_env }}/{{ project_name }}/{{ c.name }}",
+                    "log_stream_name": "{instance_id}/stdout",
+                    "timezone": "UTC"
+                },
+                {
+                    "file_path": "{{ c.app_root }}/logs/{{ c.name }}.stderr.log",
+                    "log_group_name": "/ec2/{{ detected_env }}/{{ project_name }}/{{ c.name }}",
+                    "log_stream_name": "{instance_id}/stderr",
+                    "timezone": "UTC"
+                }{% if not loop.last %},{% endif %}
+                {% endfor %}
+                ]
+            }
+        }
+    }
+}
