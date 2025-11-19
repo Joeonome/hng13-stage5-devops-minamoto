@@ -1,0 +1,24 @@
+# group_vars/staging.yml
+env_name: staging
+project_name: minamoto
+
+# components to deploy on this host (both deployed to same host in your scenario)
+components:
+  - name: frontend
+    repo: 'git@github.com:yourorg/minamoto-frontend.git'
+    branch: 'develop'
+    app_root: /opt/minamoto/frontend
+    listen_port: 3000        # internal port the frontend dev server listens on (or build -> serve port)
+    type: node
+    domain: staging.minamoto.example.com
+
+  - name: backend
+    repo: 'git@github.com:yourorg/minamoto-backend.git'
+    branch: 'develop'
+    app_root: /opt/minamoto/backend
+    listen_port: 4000
+    type: node                  # or 'python' etc.
+    domain: api.staging.minamoto.example.com
+
+use_ssh_agent_forwarding: false
+deploy_user: ubuntu

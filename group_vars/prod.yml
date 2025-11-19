@@ -1,0 +1,23 @@
+# group_vars/prod.yml
+env_name: prod
+project_name: minamoto
+
+components:
+  - name: frontend
+    repo: 'git@github.com:yourorg/minamoto-frontend.git'
+    branch: 'main'
+    app_root: /opt/minamoto/frontend
+    listen_port: 80
+    type: node
+    domain: minamoto.example.com
+
+  - name: backend
+    repo: 'git@github.com:yourorg/minamoto-backend.git'
+    branch: 'main'
+    app_root: /opt/minamoto/backend
+    listen_port: 5000
+    type: node
+    domain: api.minamoto.example.com
+
+use_ssh_agent_forwarding: false
+deploy_user: ubuntu
