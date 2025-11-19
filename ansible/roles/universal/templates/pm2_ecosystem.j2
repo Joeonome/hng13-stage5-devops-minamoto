@@ -1,0 +1,14 @@
+module.exports = {
+  apps: [
+    {
+      name: "{{ comp.name }}",
+      script: "npm",
+      args: "start",
+      cwd: "{{ comp.app_root }}",
+      env: {
+        NODE_ENV: "{{ detected_env }}",
+        PORT: "{{ comp.listen_port }}"
+      }
+    }
+  ]
+};
